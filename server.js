@@ -11,6 +11,10 @@ const messageRouter = require('./routes/messages.router.js');
 const PORT = 3000;
 const app = express();
 
+//TEMPLATE ENGINE
+app.set('view engine','hbs');
+app.set('views',path.join(__dirname,'views'));
+
 //------------------------------MIDDLEWARES------------------------------
 
 //MIDDLEWARE THAT LOGS INFO ABOUT EVERY REQUEST
@@ -36,6 +40,9 @@ app.use(express.json());
 app.use('/friends',friendsRouter);
 app.use('/messages',messageRouter);
 //app.get('/',indexController.renderIndex);
+app.get('/',(req,res)=>{
+    res.render('index.hbs',{siteTitle:'Site Title',bodyText:'Web Site - Home Page'});
+});
 
 //-------------------------------START OF THE SERVER-------------------------------
 app.listen(PORT,()=>{
