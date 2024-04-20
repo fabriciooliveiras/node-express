@@ -1,7 +1,8 @@
 const express = require('express');
+const path = require('path');
 
 //INDEX CONTROLLER
-const indexController = require('./controllers/index.controller');
+//const indexController = require('./controllers/index.controller');
 
 //ROUTERS
 const friendsRouter = require('./routes/friends.router.js');
@@ -25,6 +26,8 @@ app.use((req,res,next)=>{
     console.log(`${req.method} | ${req.url} | ${delta}ms`);
 });
 
+app.use('/',express.static(path.join(__dirname,'public')));
+
 //MIDDLEWARE THAT ALOWS FOR USING THE REQ.BODY
 app.use(express.json());
 
@@ -32,7 +35,7 @@ app.use(express.json());
 
 app.use('/friends',friendsRouter);
 app.use('/messages',messageRouter);
-app.get('/',indexController.renderIndex);
+//app.get('/',indexController.renderIndex);
 
 //-------------------------------START OF THE SERVER-------------------------------
 app.listen(PORT,()=>{
