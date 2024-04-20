@@ -1,13 +1,14 @@
 const express = require('express');
 
+//INDEX CONTROLLER
 const indexController = require('./controllers/index.controller');
-const friendsController = require('./controllers/friends.controller');
-const messagesController = require('./controllers/messages.controller');
+
+//ROUTERS
+const friendsRouter = require('./routes/friends.router.js');
+const messageRouter = require('./routes/messages.router.js');
 
 const PORT = 3000;
-
 const app = express();
-
 
 //------------------------------MIDDLEWARES------------------------------
 
@@ -28,17 +29,10 @@ app.use((req,res,next)=>{
 app.use(express.json());
 
 //-------------------------------ENDPOINTS-------------------------------
-app.get('/friends/get',friendsController.getAllFriends);
 
-app.get('/friends/get/:friendId',friendsController.getParticularFriend);
-
-app.post('/friends/post',friendsController.postFriend);
-
-app.get('/messages/get',messagesController.getMessages);
-app.post('/messages/post',messagesController.postMessage);
-
+app.use('/friends',friendsRouter);
+app.use('/messages',messageRouter);
 app.get('/',indexController.renderIndex);
-
 
 //-------------------------------START OF THE SERVER-------------------------------
 app.listen(PORT,()=>{
